@@ -24,6 +24,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  micro_mobile:
+    path: "../micro_mobile"
   payments:
     path: "../payments"
   profile:
