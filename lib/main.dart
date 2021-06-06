@@ -3,7 +3,7 @@ import "package:micro_mobile/micro_mobile.dart";
 import "package:payments/app.dart";
 import "package:profile/app.dart";
 import './models/transaction_model.dart';
-import "./widgets/transaction_card.dart";
+// import "./widgets/transaction_card.dart";
 
 void main() {
   runApp(App());
@@ -17,7 +17,6 @@ class App extends StatelessWidget {
     store.registerEvent('NAVIGATE_HOME');
     store.registerEvent('NAVIGATE_PROFILE');
     store.registerEvent('NAVIGATE_PAYMENTS');
-    store.registerEvent('NAVIGATE_POP');
 
     store.addEventListener('TRANSACTION_ADD', (Object payload) {
       print('TRANSACTION_ADD');
@@ -33,10 +32,6 @@ class App extends StatelessWidget {
 
     store.addEventListener('NAVIGATE_PAYMENTS', (BuildContext context) {
       print('NAVIGATE_PAYMENTS');
-    });
-
-    store.addEventListener('NAVIGATE_POP', (BuildContext context) {
-      print('NAVIGATE_POP');
     });
   }
 
@@ -64,9 +59,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final transactions = <Transaction>[
-    Transaction(name: "Hekki", date: "06.05.2021", value: "+250 USA")
-  ];
+  final transactions = <Transaction>[];
 
   @override
   void initState() {
@@ -74,8 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     widget.store.addEventListener("TRANSACTION_ADD", (Transaction payload) {
       addTransation(payload);
-      addTransation(
-          Transaction(name: "Hello", date: "06.05.2021", value: "+250 USA"));
     });
   }
 
@@ -101,10 +92,6 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (context) => PaymentsScreen(store: widget.store)));
     });
 
-    widget.store.addEventListener('NAVIGATE_POP', (BuildContext context) {
-      Navigator.pop(context);
-    });
-
     return Scaffold(
         body: SafeArea(
             child: Padding(
@@ -112,46 +99,39 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Column(
             children: [
-              IconButton(
-                  onPressed: () {
-                    widget.store.emit('NAVIGATE_PAYMENTS', context);
-                  },
-                  icon: Icon(Icons.credit_card)),
-              Container(
-                height: 70,
-                alignment: Alignment.center,
-                child: Text(
-                  "Главная",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        widget.store.emit('NAVIGATE_PAYMENTS', context);
+                      },
+                      icon: Icon(Icons.credit_card)),
+                  Container(
+                    height: 70,
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Главная",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        widget.store.emit('NAVIGATE_PROFILE', context);
+                      },
+                      icon: Icon(Icons.person))
+                ],
               ),
-              IconButton(
-                  onPressed: () {
-                    widget.store.emit('NAVIGATE_PROFILE', context);
-                  },
-                  icon: Icon(Icons.person))
+              Container(
+                height: 500,
+                child: LatestTransactions(store: widget.store),
+              )
             ],
           ),
-          Expanded(
-            child: Padding(
-                padding: EdgeInsets.only(top: 10),
-                child: ListView.builder(
-                    itemCount: transactions.length,
-                    itemBuilder: (context, index) {
-                      var transaction = transactions[index];
-
-                      return Padding(
-                        padding: EdgeInsets.only(top: 10, bottom: 10),
-                        child: TransactionCard(
-                            name: transaction.name,
-                            date: transaction.date,
-                            value: transaction.value),
-                      );
-                    })),
-          ),
+          AddTransactionButton(store: widget.store)
         ],
       ),
     )));
