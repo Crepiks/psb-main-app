@@ -1,16 +1,57 @@
-# main
+# The Main PSB DEMO Application of Micro Mobile Architecture
 
-A new Flutter project.
+### Concepts
 
-## Getting Started
+The micro mobile applications and store are imported in `pubspec.yaml`.
 
-This project is a starting point for a Flutter application.
+```
+micro_mobile:
+    git:
+      url: git://github.com/Crepiks/flutter-micro-mobile
 
-A few resources to get you started if this is your first Flutter project:
+  payments:
+    git:
+      url: git://github.com/Crepiks/psb-payments
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+  profile:
+    git:
+      url: git://github.com/Crepiks/psb-profile
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+In `dart.main` store is imported and configured. The events are registered.
+
+```
+App() {
+    store.registerEvent('TRANSACTION_ADD');
+    store.registerEvent('NAVIGATE_HOME');
+    store.registerEvent('NAVIGATE_PROFILE');
+    store.registerEvent('NAVIGATE_PAYMENTS');
+}
+```
+
+Widgets from micro mobile apps are imported and store is passed into them as an argument of the constructor.
+
+```
+ProfileScreen(store: widget.store)
+```
+
+There is custom widgets created in main application which consume non-screen widgets imported from micro mobile apps;
+
+```
+Container(
+    height: 500,
+    child: LatestTransactions(store: widget.store),
+)
+```
+
+The common interfaces can be exported from main application. For instance, the Transaction model in defined in main application and consumed by micro apps.
+
+```
+class Transaction {
+  String name;
+  String date;
+  String value;
+
+  Transaction({required this.name, required this.date, required this.value});
+}
+```
