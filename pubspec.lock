@@ -84,9 +84,11 @@ packages:
   micro_mobile:
     dependency: "direct main"
     description:
-      path: "../micro_mobile"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "09f8c8e4924faaafc872384d146bdeb55e252fb0"
+      url: "git://github.com/Crepiks/flutter-micro-mobile"
+    source: git
     version: "0.0.1"
   path:
     dependency: transitive
@@ -98,16 +100,20 @@ packages:
   payments:
     dependency: "direct main"
     description:
-      path: "../payments"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: ffd2f089e9872c0975aa64efad7964d961fd86dd
+      url: "git://github.com/Crepiks/psb-payments"
+    source: git
     version: "1.0.0+1"
   profile:
     dependency: "direct main"
     description:
-      path: "../profile"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: cd616de76f88125321ace61b571946463d77eacf
+      url: "git://github.com/Crepiks/psb-profile"
+    source: git
     version: "1.0.0+1"
   sky_engine:
     dependency: transitive

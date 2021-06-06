@@ -25,11 +25,16 @@ dependencies:
     sdk: flutter
 
   micro_mobile:
-    path: "../micro_mobile"
+    git:
+      url: git://github.com/Crepiks/flutter-micro-mobile
+
   payments:
-    path: "../payments"
+    git:
+      url: git://github.com/Crepiks/psb-payments
+
   profile:
-    path: "../profile"
+    git:
+      url: git://github.com/Crepiks/psb-profile
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
